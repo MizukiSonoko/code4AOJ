@@ -2,16 +2,14 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 int main(){
-	string s;
-    regex reg(R"(^([1-9]\d+|\d)\.([1-9]\d+|\d)\.([1-9]\d+|\d)\.([1-9]\d+|\d)$)");
-    while(cin>>s){
-	    if(regex_match(s, reg)){
-	    	cout<<"OK\n";
+	std::string s;
+    std::regex reg(R"(^([1-9]\d+|\d)\.([1-9]\d+|\d)\.([1-9]\d+|\d)\.([1-9]\d+|\d)$)");
+    while(std::cin>>s){
+	    if(std::regex_match(s, reg)){
+	    	std::cout<<"OK\n";
 	    }else{
-	    	cout<<"NG\n";
+	    	std::cout<<"NG\n";
 	    }
 	}
     return 0;
