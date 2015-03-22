@@ -18,6 +18,7 @@ do
 	cat i_${i} | grep "<html>"
 	if [ $? -eq 0 ] ; then
 		rm i_${i} o_${i} 
+		i=`expr $i - 1`
 		break
 	fi
 
@@ -25,14 +26,14 @@ done
 
 make
 
-while [ $i -ne 1 ]
+while [ $i -ne 0 ]
 do
-
-	i=`expr $i - 1`
+	echo "------"$i"'s result is -----"
 	./run < i_${i} > my_out_${i}
-	diff -s o_${i} my_out_${i} | grep Files
+	diff -s o_${i} my_out_${i}
 	diff -q o_${i} my_out_${i} | grep Files
 	rm i_${i} o_${i} my_out_${i} 
+	i=`expr $i - 1`
 
 done
 
