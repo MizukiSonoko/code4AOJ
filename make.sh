@@ -1,30 +1,19 @@
 #! /bin/bash
 
-#http://analytic.u-aizu.ac.jp:8080/aoj/testcase.jsp?id=DPL_1_A&case=1&type=in
-ID=${PWD##*/}
-url="http://analytic.u-aizu.ac.jp:8080/aoj/testcase.jsp"
-echo ${ID}
+echo -n "Which problem do you want to do? " 
+read question
 
-i=0
-while [ $i -ne 20 ]
-do
-	i=`expr $i + 1`
-	request_i=${url}"?id="${PWD##*/}"&case="${i}"&type=in"
-	request_o=${url}"?id="${PWD##*/}"&case="${i}"&type=out"
-	echo ${request_i}
-	echo ${request_o}
-	curl $request_i -o i_${i}
-	curl $request_o -o o_${i}
-done
-
-make
-
-i=0
-while [ $i -ne 20 ]
-do
-	i=`expr $i + 1`
-	./run < i_${i} > my_out_${i}
-	diff -s o_${i} my_out_${i}
-	rm i_${i} o_${i} my_out_${i} 
-done
-rm run
+echo -n "You want to do this question?:"${question}" [y/n]"
+read answer
+if [ ${answer} != "y" ] ; then
+	exit 1
+else
+	mkdir ${question}
+	cd ${question}
+	cp ../template/cpp_solv.cpp .
+	cp ../template/Makefile .
+	cp ../template/commit.sh .
+	make
+	./run
+	rm run
+fi
